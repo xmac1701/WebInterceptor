@@ -26,7 +26,7 @@ begin
   sConsoleLogger.ColorDetail := TConsoleColor(sConfig.ReadInteger('Logging', 'ErrorColor', 13));
   sConsoleLogger.ColorDebug := TConsoleColor(sConfig.ReadInteger('Logging', 'ErrorColor', 8));
 
-  sLog.OutNormal('WebInterceptor/' + SVN_REV);
+  sLog.OutNormal('WebInterceptor '{ + _REVISION});
   sLog.OutTitle('');
   sLog.OutTitle('NNNN          NN                                        NN');
   sLog.OutTitle(' NN           NN                                        NN');
@@ -46,11 +46,14 @@ begin
 
 //todo: Load config
 
+//todo: Launch Network socket
+  sHttpd := TWIHttpd.Create;
+  sHttpd.LoadConfig;
+  sHttpd.Startup;
+
 //todo: check if console enabled.
   ConsoleRun;
 
-//todo: Launch Network socket
-
 //todo: some finalization code
-
+  sHttpd.Shutdown;
 end.

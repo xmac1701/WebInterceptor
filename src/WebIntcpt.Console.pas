@@ -4,17 +4,30 @@ interface
 
 uses
   Windows, SysUtils, CILib.Utils,
-  WebIntcpt.Global;
+  WebIntcpt.Global, OtlTask;
+
+procedure CommandProcessor(const task: IOmniTask);
 
 procedure ConsoleRun;
 
 implementation
 
+uses
+  WebIntcpt.Httpd;
+
+procedure CommandProcessor(const task: IOmniTask);
+begin
+  while sHttpd.Active do
+  begin
+
+  end;
+end;
+
 procedure ConsoleRun;
 var
   command: string;
 begin
-  while not Network_IsStopped() do
+  while sHttpd.Active do
   begin
     Write('server>');
     Flush(Output);

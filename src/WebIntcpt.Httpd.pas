@@ -10,37 +10,67 @@ uses
 type
   TWIHttpd = class(TObject)
   private
-    httpd: TIdHTTPServer;
-    taskCtrl: IOmniTaskControl;
+    httpsvr: TIdHTTPServer;
+    function GetActive: Boolean;
+    procedure SetActive(const Value: Boolean);
   public
     constructor Create;
-    procedure RunHttpServer(const task: IOmniTask);
-    procedure StartServer;
-    procedure StopServer;
+    destructor Destroy; override;
+    procedure LoadConfig;
+    procedure Startup;
+    procedure Shutdown;
+    property Active: Boolean read GetActive write SetActive;
   end;
+
+var
+  sHttpd: TWIHttpd;
 
 implementation
 
+uses
+  WebIntcpt.Global;
+
 constructor TWIHttpd.Create;
 begin
-  httpd := TIdHTTPServer.Create;
+  httpsvr := TIdHTTPServer.Create;
 
 end;
 
-procedure TWIHttpd.RunHttpServer(const task: IOmniTask);
+destructor TWIHttpd.Destroy;
 begin
+  Shutdown;
 
+  httpsvr.Free;
+
+  inherited;
 end;
 
-procedure TWIHttpd.StartServer;
+function TWIHttpd.GetActive: Boolean;
 begin
-  taskCtrl := CreateTask(RunHttpServer, 'httpd')
-                .Run;
+  Result := httpsvr.Active;
 end;
 
-procedure TWIHttpd.StopServer;
+procedure TWIHttpd.LoadConfig;
 begin
-  taskCtrl.Terminate(10);
+  // TODO -cMM: TWIHttpd.LoadConfig default body inserted
+end;
+
+procedure TWIHttpd.SetActive(const Value: Boolean);
+begin
+  if Value then
+    Startup
+  else
+    Shutdown;
+end;
+
+procedure TWIHttpd.Startup;
+begin
+  httpsvr.Active := True;
+end;
+
+procedure TWIHttpd.Shutdown;
+begin
+  httpsvr.Active := False;
 end;
 
 end.

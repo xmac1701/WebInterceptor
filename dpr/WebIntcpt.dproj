@@ -20,7 +20,7 @@
 			<Base>true</Base>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Base)'!=''">
-			<DCC_DefaultNamespace>WebServer</DCC_DefaultNamespace>
+			<DCC_DefaultNamespace>WebIntcpt</DCC_DefaultNamespace>
 			<DCC_NameSpace>CILib;Spring</DCC_NameSpace>
 			<DCC_DependencyCheckOutputName>..\bin\WebIntcpt.exe</DCC_DependencyCheckOutputName>
 			<DCC_ExeOutput>..\bin</DCC_ExeOutput>
@@ -61,9 +61,6 @@
 			</BuildConfiguration>
 		</ItemGroup>
 		<Import Project="$(BDS)\Bin\CodeGear.Delphi.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')"/>
-		<PropertyGroup>
-			<PreBuildEvent><![CDATA[@..\bin\SVNRevExtractor.exe]]></PreBuildEvent>
-		</PropertyGroup>
 		<ProjectExtensions>
 			<Borland.Personality>Delphi.Personality.12</Borland.Personality>
 			<Borland.ProjectType/>
